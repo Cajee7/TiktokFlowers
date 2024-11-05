@@ -1430,3 +1430,79 @@ body {
       opacity: 0.8;
     }
   }
+
+  /* Performance optimizations */
+.animated-element {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    perspective: 1000;
+    transform: translateZ(0);
+  }
+  
+  /* Smooth animation defaults */
+  .fade-in {
+    animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  
+  .float-animation {
+    animation: floatName 3s ease-in-out infinite;
+  }
+  
+  .glow-animation {
+    animation: glowPulse 2s ease-in-out infinite;
+  }
+  
+  .border-animation {
+    animation: borderGlow 2s ease-in-out infinite;
+  }
+  
+  /* Reduced Motion Preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .animated-element {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+  
+  /* Mobile Optimizations */
+  @media screen and (max-width: 768px) {
+    /* Adjust animation scales for smaller screens */
+    @keyframes floatName {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-5px); /* Reduced float height */
+      }
+    }
+  
+    /* Reduce animation durations on mobile */
+    .fade-in {
+      animation-duration: 0.5s;
+    }
+  
+    .float-animation {
+      animation-duration: 2s;
+    }
+  
+    .glow-animation,
+    .border-animation {
+      animation-duration: 1.5s;
+    }
+  }
+  
+  /* Touch Device Optimizations */
+  @media (hover: none) {
+    /* Disable hover-specific animations on touch devices */
+    .hover-animation {
+      animation: none;
+    }
+  }
+  
+  /* High-End Device Optimizations */
+  @supports (animation-timeline: scroll()) {
+    .scroll-animated {
+      animation-timeline: scroll();
+      animation-range: entry 50% cover 50%;
+    }
+  }
