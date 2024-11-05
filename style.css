@@ -1431,7 +1431,7 @@ body {
     }
   }
 
-  /* Performance optimizations */
+ /* Performance optimizations */
 .animated-element {
     will-change: transform, opacity;
     backface-visibility: hidden;
@@ -1456,27 +1456,72 @@ body {
     animation: borderGlow 2s ease-in-out infinite;
   }
   
-  /* Reduced Motion Preferences */
-  @media (prefers-reduced-motion: reduce) {
-    .animated-element {
-      animation: none !important;
-      transition: none !important;
-    }
+  /* Mobile-First Responsive Design */
+  :root {
+    --content-scale: 1;
+    --spacing-scale: 1;
+    --font-scale: 1;
+  }
+  
+  /* Base container styles */
+  .container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+  
+  /* Responsive Typography */
+  html {
+    font-size: 16px;
   }
   
   /* Mobile Optimizations */
   @media screen and (max-width: 768px) {
-    /* Adjust animation scales for smaller screens */
+    :root {
+      --content-scale: 0.9;
+      --spacing-scale: 0.8;
+      --font-scale: 0.9;
+    }
+  
+    html {
+      font-size: calc(14px * var(--font-scale));
+    }
+  
+    /* Container adjustments */
+    .container {
+      padding: calc(10px * var(--spacing-scale));
+    }
+  
+    /* Scale down elements */
+    .animated-element {
+      transform: scale(var(--content-scale));
+      margin: calc(10px * var(--spacing-scale));
+    }
+  
+    /* Adjust heights and widths */
+    .section {
+      min-height: calc(80vh * var(--content-scale));
+      padding: calc(15px * var(--spacing-scale));
+    }
+  
+    /* Adjust images */
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  
+    /* Adjust animation scales */
     @keyframes floatName {
       0%, 100% {
         transform: translateY(0);
       }
       50% {
-        transform: translateY(-5px); /* Reduced float height */
+        transform: translateY(calc(-4px * var(--content-scale)));
       }
     }
   
-    /* Reduce animation durations on mobile */
+    /* Reduce animation durations */
     .fade-in {
       animation-duration: 0.5s;
     }
@@ -1491,9 +1536,60 @@ body {
     }
   }
   
+  /* Small Mobile Devices */
+  @media screen and (max-width: 480px) {
+    :root {
+      --content-scale: 0.8;
+      --spacing-scale: 0.7;
+      --font-scale: 0.8;
+    }
+  
+    html {
+      font-size: calc(12px * var(--font-scale));
+    }
+  
+    .section {
+      min-height: calc(70vh * var(--content-scale));
+      padding: calc(10px * var(--spacing-scale));
+    }
+  }
+  
+  /* Height-based adjustments */
+  @media screen and (max-height: 700px) {
+    .section {
+      min-height: auto;
+      padding: calc(12px * var(--spacing-scale));
+    }
+  }
+  
+  /* Landscape Mode Optimization */
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    :root {
+      --content-scale: 0.7;
+      --spacing-scale: 0.6;
+      --font-scale: 0.7;
+    }
+  
+    .section {
+      min-height: auto;
+      padding: calc(10px * var(--spacing-scale));
+    }
+  
+    html {
+      font-size: calc(12px * var(--font-scale));
+    }
+  }
+  
+  /* Reduced Motion Preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .animated-element {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+  
   /* Touch Device Optimizations */
   @media (hover: none) {
-    /* Disable hover-specific animations on touch devices */
     .hover-animation {
       animation: none;
     }
@@ -1506,3 +1602,4 @@ body {
       animation-range: entry 50% cover 50%;
     }
   }
+  
